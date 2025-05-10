@@ -1,0 +1,53 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#273549"
+    android:scrollbarStyle="insideOverlay"
+    android:padding="8dp"
+    android:layout_marginBottom="8dp">
+
+    <EditText
+        android:id="@+id/editUserName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Имя пользователя"
+        android:inputType="text"/>
+
+    <EditText
+        android:id="@+id/editUserAge"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Возраст"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editHeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Рост"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/editActivity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Уровень активности"
+        android:tooltipText="@string/activity_tooltip"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/editGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Пол"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/editGoalIndex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Целевой индекс веса"
+        android:tooltipText="@string/goal_tooltip"
+        android:inputType="numberDecimal" />
+</LinearLayout>

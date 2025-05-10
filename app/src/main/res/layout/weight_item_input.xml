@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#273549"
+    android:scrollbarStyle="insideOverlay"
+    android:padding="8dp"
+    android:layout_marginBottom="8dp">
+
+    <EditText
+        android:id="@+id/editWeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Текущий вес"
+        android:inputType="numberDecimal"/>
+
+</LinearLayout>

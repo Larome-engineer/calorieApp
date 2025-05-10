@@ -1,0 +1,80 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.plugin.compose'
+
+}
+
+android {
+    namespace = "com.app.calorie"
+    compileSdk = 35
+
+    defaultConfig {
+        applicationId = "com.app.calorie"
+        minSdk = 34
+        targetSdk = 35
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+
+    }
+    compileOptions {
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = "11"
+    }
+    buildFeatures {
+        compose = true
+        viewBinding = true
+    }
+
+}
+
+dependencies {
+    // Room
+    implementation "androidx.room:room-runtime:2.7.1"
+    kapt "androidx.room:room-compiler:2.7.1"
+    implementation "androidx.room:room-ktx:2.7.1"
+
+    // Navigation
+    implementation "androidx.navigation:navigation-fragment-ktx:2.8.9"
+    implementation "androidx.navigation:navigation-ui-ktx:2.8.9"
+
+    // Lifecycle
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.8.7"
+
+    implementation 'androidx.compose.runtime:runtime:1.6.5'  // <-- Эта строка критически важна
+    implementation 'androidx.compose.ui:ui:1.8.0'
+    implementation 'androidx.compose.foundation:foundation:1.8.0'
+    implementation 'androidx.compose.material3:material3:1.3.2'
+    implementation libs.androidx.activity.compose.v182
+
+    implementation 'com.google.android.material:material:1.11.0'
+    implementation "androidx.navigation:navigation-fragment-ktx:2.7.7"
+    implementation "androidx.navigation:navigation-ui-ktx:2.7.7"
+
+    // UI
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    // Coroutines
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.0'
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation 'com.google.code.gson:gson:2.10.1'
+
+
+
+//    // For testing (optional, if нужно для юнит-тестов)
+//    testImplementation('junit:junit:4.13.2'
+//    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+//    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+}

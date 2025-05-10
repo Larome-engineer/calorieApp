@@ -1,0 +1,43 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#273549"
+    android:scrollbarStyle="insideOverlay"
+    android:padding="8dp"
+    android:layout_marginBottom="8dp">
+
+    <EditText
+        android:id="@+id/editDishName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Название блюда" />
+
+    <EditText
+        android:id="@+id/editCalories"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Калории"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/editProtein"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Белки"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/editFat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Жиры"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/editCarbs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Углеводы"
+        android:inputType="numberDecimal" />
+</LinearLayout>

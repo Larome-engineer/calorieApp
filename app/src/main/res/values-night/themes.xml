@@ -1,0 +1,9 @@
+<resources>
+    <style name="Theme.CalorieCalculator" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/purple_200</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="fontFamily">@font/ssf_pro</item>
+    </style>
+</resources>
