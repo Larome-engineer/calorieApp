@@ -52,7 +52,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         lifecycleScope.launch {
-            val user = userService.getUsers(applicationContext).first()
+            val user: UserInfo?
+            val users = userService.getUsers(applicationContext)
+            user = if (!users.isEmpty()) {
+                users.first()
+            } else {
+                null
+            }
             val stats = statsService.getStatsByLastDate(applicationContext)
             calorieOnStartPreset(stats, user)
             presetClickButtonListeners()
