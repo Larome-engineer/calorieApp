@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.graphics.toColorInt
 import androidx.lifecycle.lifecycleScope
-import calculateCaloriesForTargetWeight
+import calculateMacros
 import com.app.calorie.R
 import com.app.calorie.data.database.relations.StatsWithDetails
 import com.app.calorie.data.entities.Stats
@@ -94,14 +94,20 @@ class MainActivity : AppCompatActivity() {
 
 
             if (stats == null && user!=null) {
-                val calories = calculateCaloriesForTargetWeight(
-                    0.0, 0.0, user.height.toInt(), user.age,
-                    isMale(user.gender), user.activityLevel).recommendedCalories
+                val calories = calculateMacros(
+                    user.height.toDouble(),
+                    0.0,
+                    0.0,
+                    user.age,
+                    isMale(user.gender),
+                    user.activityLevel
+                )
 
-                setupPieChart(0, calories.toInt())
-                setupLineChart(0, ((calories.toInt()*0.4) / 4).toInt(), "carbs")
-                setupLineChart(0, ((calories.toInt()*0.3) / 4).toInt(), "protein")
-                setupLineChart(0, ((calories.toInt()*0.3) / 9).toInt(), "fat")
+                setupPieChart(0, calories.targetCalories.toInt())
+                setupLineChart(0, calories.carbGrams, "carbs")
+                setupLineChart(0, calories.proteinGrams, "protein")
+                setupLineChart(0, calories.fatGrams, "fat")
+
                 findViewById<TextView>(R.id.weightText).text = 0.0.toString()
                 findViewById<TextView>(R.id.goalWeightText).text = 0.0.toString()
 
@@ -143,14 +149,20 @@ class MainActivity : AppCompatActivity() {
                     mealsByFoodIntake["Ужин"]?.joinToString(", ", prefix = "", postfix = "") ?: ""
 
 
-                val calories = calculateCaloriesForTargetWeight(
-                    stats.weight.weight, stats.weight.goalWeight, user.height.toInt(), user.age,
-                    isMale(user.gender), user.activityLevel).recommendedCalories
+                val calories = calculateMacros(
+                    heightCm = user.height.toDouble(),
+                    currentWeightKg = stats.weight.weight,
+                    targetWeightKg = stats.weight.goalWeight,
+                    age = user.age,
+                    isMale = isMale(user.gender),
+                    activityMultiplier = user.activityLevel
+                )
 
-                setupPieChart(sumOfCalories, calories.toInt())
-                setupLineChart(sumOfCarbs, ((calories.toInt()*0.4) / 4).toInt(), "carbs")
-                setupLineChart(sumOfProtein, ((calories.toInt()*0.3) / 4).toInt(), "protein")
-                setupLineChart(sumOfFat, ((calories.toInt()*0.3) / 9).toInt(), "fat")
+                setupPieChart(sumOfCalories, calories.targetCalories.toInt())
+                setupLineChart(sumOfCarbs, calories.carbGrams, "carbs")
+                setupLineChart(sumOfProtein, calories.proteinGrams, "protein")
+                setupLineChart(sumOfFat, calories.fatGrams, "fat")
+
                 findViewById<TextView>(R.id.weightText).text = stats.weight.weight.toString()
                 findViewById<TextView>(R.id.goalWeightText).text = stats.weight.goalWeight.toString()
 
@@ -177,14 +189,20 @@ class MainActivity : AppCompatActivity() {
             }
 
             if (stats == null) {
-                val calories = calculateCaloriesForTargetWeight(
-                    0.0, 0.0, user.height.toInt(), user.age,
-                    isMale(user.gender), user.activityLevel).recommendedCalories
+                val calories = calculateMacros(
+                    heightCm = user.height.toDouble(),
+                    currentWeightKg = 0.0,
+                    targetWeightKg = 0.0,
+                    age = user.age,
+                    isMale = isMale(user.gender),
+                    activityMultiplier = user.activityLevel
+                )
 
-                setupPieChart(0, calories.toInt())
-                setupLineChart(0, ((calories.toInt()*0.4) / 4).toInt(), "carbs")
-                setupLineChart(0, ((calories.toInt()*0.3) / 4).toInt(), "protein")
-                setupLineChart(0, ((calories.toInt()*0.3) / 9).toInt(), "fat")
+                setupPieChart(0, calories.targetCalories.toInt())
+                setupLineChart(0, calories.carbGrams, "carbs")
+                setupLineChart(0, calories.proteinGrams, "protein")
+                setupLineChart(0, calories.fatGrams, "fat")
+
                 findViewById<TextView>(R.id.weightText).text = 0.0.toString()
                 findViewById<TextView>(R.id.goalWeightText).text = 0.0.toString()
 
@@ -216,9 +234,14 @@ class MainActivity : AppCompatActivity() {
                     mealsByFoodIntake[intake.foodIntake.name] = mealNames
                 }
 
-                val calories = calculateCaloriesForTargetWeight(
-                    stats.weight.weight, stats.weight.goalWeight, user.height.toInt(), user.age,
-                    isMale(user.gender), user.activityLevel).recommendedCalories
+                val calories = calculateMacros(
+                    heightCm = user.height.toDouble(),
+                    currentWeightKg = stats.weight.weight,
+                    targetWeightKg = stats.weight.goalWeight,
+                    age = user.age,
+                    isMale = isMale(user.gender),
+                    activityMultiplier = user.activityLevel
+                )
 
                 findViewById<TextView>(R.id.breakfastMeals).text =
                     mealsByFoodIntake["Завтрак"]?.joinToString(", ", prefix = "", postfix = "") ?: ""
@@ -229,10 +252,11 @@ class MainActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.dinnerMeals).text =
                     mealsByFoodIntake["Ужин"]?.joinToString(", ", prefix = "", postfix = "") ?: ""
 
-                setupPieChart(sumOfCalories, calories.toInt(), "reset")
-                setupLineChart(sumOfCarbs, ((calories.toInt()*0.4) / 4).toInt(), "carbs")
-                setupLineChart(sumOfProtein, ((calories.toInt()*0.3) / 4).toInt(), "protein")
-                setupLineChart(sumOfFat, ((calories.toInt()*0.3) / 9).toInt(), "fat")
+                setupPieChart(sumOfCalories, calories.targetCalories.toInt(), "reset")
+                setupLineChart(sumOfCarbs, calories.carbGrams, "carbs")
+                setupLineChart(sumOfProtein, calories.proteinGrams, "protein")
+                setupLineChart(sumOfFat, calories.fatGrams, "fat")
+
                 findViewById<TextView>(R.id.weightText).text = stats.weight.weight.toString()
                 findViewById<TextView>(R.id.goalWeightText).text = stats.weight.goalWeight.toString()
             }
