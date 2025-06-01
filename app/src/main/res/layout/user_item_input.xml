@@ -34,14 +34,18 @@
         android:layout_height="wrap_content"
         android:hint="Уровень активности"
         android:tooltipText="@string/activity_tooltip"
-        android:inputType="numberDecimal" />
+        android:focusable="false"
+        android:clickable="true"
+        android:inputType="none" />
 
     <EditText
         android:id="@+id/editGender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Пол"
-        android:inputType="text" />
+        android:focusable="false"
+        android:clickable="true"
+        android:inputType="none" />
 
     <EditText
         android:id="@+id/editGoalIndex"
@@ -49,5 +53,7 @@
         android:layout_height="wrap_content"
         android:hint="Целевой индекс веса"
         android:tooltipText="@string/goal_tooltip"
-        android:inputType="numberDecimal" />
+        android:focusable="false"
+        android:clickable="true"
+        android:inputType="none" />
 </LinearLayout>

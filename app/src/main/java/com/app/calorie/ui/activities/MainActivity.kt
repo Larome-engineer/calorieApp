@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.graphics.toColorInt
@@ -79,12 +80,12 @@ class MainActivity : AppCompatActivity() {
             val userInfo: String = if (user == null) {
                 ""
             } else {
-                "Имя: ${user.name}\n" +
-                        "Рост: ${user.height}\n" +
-                        "Возраст: ${user.age}\n" +
-                        "Пол: ${convertGender(user.gender)}\n" +
-                        "Активность: ${convertActivityLevel(user.activityLevel)}\n" +
-                        "Цель: ${goalConverter(user.goalIndex)}"
+                "• Имя: ${user.name}\n" +
+                        "• Рост: ${user.height}\n" +
+                        "• Возраст: ${user.age}\n" +
+                        "• Пол: ${convertGender(user.gender)}\n" +
+                        "• Активность: ${convertActivityLevel(user.activityLevel)}\n" +
+                        "• Цель: ${goalConverter(user.goalIndex)}"
             }
 
             findViewById<TextView>(R.id.userInfo).apply {
@@ -176,12 +177,12 @@ class MainActivity : AppCompatActivity() {
         if (user == null) {
             return
         } else {
-            val userInfo = "Имя: ${user.name}\n" +
-                    "Рост: ${user.height}\n" +
-                    "Возраст: ${user.age}\n" +
-                    "Пол: ${convertGender(user.gender)}\n\n" +
-                    "Активность: ${convertActivityLevel(user.activityLevel)}\n" +
-                    "Цель: ${goalConverter(user.goalIndex)}"
+            val userInfo = "• Имя: ${user.name}\n" +
+                    "• Рост: ${user.height}\n" +
+                    "• Возраст: ${user.age}\n" +
+                    "• Пол: ${convertGender(user.gender)}\n" +
+                    "• Активность: ${convertActivityLevel(user.activityLevel)}\n" +
+                    "• Цель: ${goalConverter(user.goalIndex)}"
 
             findViewById<TextView>(R.id.userInfo).apply {
                 text = userInfo
@@ -432,6 +433,11 @@ class MainActivity : AppCompatActivity() {
         val buttonSave = dialogView.findViewById<Button>(R.id.buttonUserSave)
         val buttonCancel = dialogView.findViewById<Button>(R.id.buttonUserCancel)
 
+
+        radioButtonInit(arrayOf("male", "female"), userInput.findViewById<EditText>(R.id.editGender))
+        radioButtonInit(arrayOf("1.2", "1.375", "1.55", "1.725", "1.9"), userInput.findViewById<EditText>(R.id.editActivity))
+        radioButtonInit(arrayOf("1", "2", "3"), userInput.findViewById<EditText>(R.id.editGoalIndex))
+
         buttonCancel.setOnClickListener {
             dialog.dismiss()
         }
@@ -463,6 +469,26 @@ class MainActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    private fun radioButtonInit(options: Array<String>, view: EditText) {
+        view.setOnClickListener {
+            var selectedOption = -1
+
+            AlertDialog.Builder(this)
+                .setTitle("Выберите опцию")
+                .setSingleChoiceItems(options, selectedOption) { _, which ->
+                    selectedOption = which
+                }
+                .setPositiveButton("ОК") { dialog, _ ->
+                    if (selectedOption >= 0) {
+                        view.setText(options[selectedOption])
+                    }
+                    dialog.dismiss()
+                }
+                .setNegativeButton("Отмена") { dialog, _ -> dialog.dismiss() }
+                .show()
+        }
+
+    }
 
     // BUTTONS CLICK LISTENERS
     private fun presetClickButtonListeners() {
