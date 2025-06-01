@@ -25,9 +25,11 @@ import com.app.calorie.data.service.StatsService
 import com.app.calorie.data.service.UserService
 import com.app.calorie.data.service.WeightService
 import com.app.calorie.ui.custom.CustomMarkerView
-import com.app.calorie.utils.convertActivityLevel
-import com.app.calorie.utils.convertGender
-import com.app.calorie.utils.goalConverter
+import com.app.calorie.utils.convertActivityLevelToValue
+import com.app.calorie.utils.convertFromValueToActivityLevel
+import com.app.calorie.utils.convertGenderToValue
+import com.app.calorie.utils.convertGoalToValue
+import com.app.calorie.utils.convertValueToGoal
 import com.app.calorie.utils.isMale
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.PieChart
@@ -83,9 +85,9 @@ class MainActivity : AppCompatActivity() {
                 "• Имя: ${user.name}\n" +
                         "• Рост: ${user.height}\n" +
                         "• Возраст: ${user.age}\n" +
-                        "• Пол: ${convertGender(user.gender)}\n" +
-                        "• Активность: ${convertActivityLevel(user.activityLevel)}\n" +
-                        "• Цель: ${goalConverter(user.goalIndex)}"
+                        "• Пол: ${convertGenderToValue(user.gender)}\n" +
+                        "• Активность: ${convertActivityLevelToValue(user.activityLevel)}\n" +
+                        "• Цель: ${convertGoalToValue(user.goalIndex)}"
             }
 
             findViewById<TextView>(R.id.userInfo).apply {
@@ -180,9 +182,9 @@ class MainActivity : AppCompatActivity() {
             val userInfo = "• Имя: ${user.name}\n" +
                     "• Рост: ${user.height}\n" +
                     "• Возраст: ${user.age}\n" +
-                    "• Пол: ${convertGender(user.gender)}\n" +
-                    "• Активность: ${convertActivityLevel(user.activityLevel)}\n" +
-                    "• Цель: ${goalConverter(user.goalIndex)}"
+                    "• Пол: ${convertGenderToValue(user.gender)}\n" +
+                    "• Активность: ${convertActivityLevelToValue(user.activityLevel)}\n" +
+                    "• Цель: ${convertGoalToValue(user.goalIndex)}"
 
             findViewById<TextView>(R.id.userInfo).apply {
                 text = userInfo
@@ -434,9 +436,15 @@ class MainActivity : AppCompatActivity() {
         val buttonCancel = dialogView.findViewById<Button>(R.id.buttonUserCancel)
 
 
-        radioButtonInit(arrayOf("male", "female"), userInput.findViewById<EditText>(R.id.editGender))
-        radioButtonInit(arrayOf("1.2", "1.375", "1.55", "1.725", "1.9"), userInput.findViewById<EditText>(R.id.editActivity))
-        radioButtonInit(arrayOf("1", "2", "3"), userInput.findViewById<EditText>(R.id.editGoalIndex))
+        radioButtonInit(arrayOf("Мужчина", "Женщина"), userInput.findViewById<EditText>(R.id.editGender))
+        radioButtonInit(
+            arrayOf(
+                "Минимальная активность", "Легкие упражнения", "Умеренные упражнения",
+                "Интенсивные упражнения", "Экстремальные нагрузки"
+            ),
+            userInput.findViewById<EditText>(R.id.editActivity)
+        )
+        radioButtonInit(arrayOf("Похудение", "Поддержание", "Набор массы"), userInput.findViewById<EditText>(R.id.editGoalIndex))
 
         buttonCancel.setOnClickListener {
             dialog.dismiss()
@@ -451,9 +459,9 @@ class MainActivity : AppCompatActivity() {
                     val name = view.findViewById<EditText>(R.id.editUserName).text.toString()
                     val age = view.findViewById<EditText>(R.id.editUserAge).text.toString().toIntOrNull() ?: 0
                     val height = view.findViewById<EditText>(R.id.editHeight).text.toString().toDoubleOrNull() ?: 0.0
-                    val activityLevel = view.findViewById<EditText>(R.id.editActivity).text.toString().toDoubleOrNull() ?: 0.0
-                    val gender = view.findViewById<EditText>(R.id.editGender).text.toString()
-                    val goalIndex = view.findViewById<EditText>(R.id.editGoalIndex).text.toString().toIntOrNull() ?: 0
+                    val activityLevel = convertFromValueToActivityLevel(view.findViewById<EditText>(R.id.editActivity).text.toString())
+                    val gender = convertGenderToValue(view.findViewById<EditText>(R.id.editGender).text.toString())
+                    val goalIndex = convertValueToGoal(view.findViewById<EditText>(R.id.editGoalIndex).text.toString())
 
                     userService.createUser(context, name, age, height, activityLevel, gender, goalIndex)
 
